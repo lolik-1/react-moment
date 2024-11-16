@@ -1,0 +1,19 @@
+
+.DrawerContent{
+    height: 600px;
+    overflow: auto; 
+    padding: 20px;
+    flex: 1 1 auto;
+   
+}
+
+
+.DrawerContent_con{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 0px;
+}
+
+
+

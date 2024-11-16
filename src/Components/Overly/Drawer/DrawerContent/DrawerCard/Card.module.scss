@@ -1,0 +1,36 @@
+.Card{
+    border: 1px solid rgb(99, 99, 99,0.5);
+    border-radius: 10px;
+}
+.Card_con{
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .img_card{
+        position: relative;
+        bottom:10px;
+    }
+
+    button{
+        display: flex;
+        align-items: center;
+        border: 1px solid rgb(99, 99, 99,0.5);
+        border-radius: 10px; 
+        padding: 5px;
+        background-color: white;
+    }
+}
+.Card_title{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 170px;
+
+    .Price{
+        color: rgba(78, 77, 77, 0.6);
+        font-weight: 600;
+    }
+
+}

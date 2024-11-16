@@ -1,0 +1,20 @@
+.Header_Drawer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+
+    p{
+        font-size: 24px;
+        font-weight: 600;
+        color: rgb(122, 121, 121);
+        cursor: pointer;
+    }
+
+}
+
+.Filter{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}

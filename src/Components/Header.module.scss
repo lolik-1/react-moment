@@ -1,0 +1,30 @@
+.Header{
+    display: flex;
+    justify-content: center;
+    .Header_con{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 1200px;
+      padding: 10px;
+
+     img{
+      border-radius: 50%;
+     }
+     .Left_side{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .Title{
+          font-size: 32px;
+          font-weight: 600;
+        }
+     }
+     .Right_side{
+        display: flex;
+        align-items: center;
+        gap: 10px;
+     }
+    }
+  }
