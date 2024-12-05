@@ -1,65 +1,80 @@
 import React from "react";
 import axios from "axios";
+import {Route, Routes } from "react-router-dom";
 
 
 
-import Header from "./Components/Header";
-import Filter from "./Components/Filter/Filter";
-import Cards from "./Components/Card/Cards"
-
-
+import Header from "./Components/Header/Header";
+import Home from "./Pages/Home";
+import Favorite from "./Pages/Favorite";
+import AppContext from "./Context/AppContext";
 
 
 
 function App() {  
-  
+
+  /*Стейты*/
   const [isCard, setCard] = React.useState([])
   const [isItemsDrawer, setItemsDrawer] = React.useState([])
   const [isActiveCategory, setActiveCategory] =React.useState(0)
 
+  /*Ссылки на бэк*/
+  let URLitem = 'https://666485f2932baf9032ab58c8.mockapi.io/item';
+  let URLcart = `https://666485f2932baf9032ab58c8.mockapi.io/cart?${isActiveCategory > 0 ? `iden=${isActiveCategory}`:''}`
+
+  /*Запросы на сервер*/
   React.useEffect(()=>{
-    axios.get(`https://666485f2932baf9032ab58c8.mockapi.io/cart?${isActiveCategory > 0 ? `iden=${isActiveCategory}`:''}` ).then((res) =>{
-      setCard(res.data)
-    })
+    async function AxiosData () {
 
-    axios.get('https://666485f2932baf9032ab58c8.mockapi.io/item').then((res) =>{
-      setItemsDrawer(res.data)
-    })
+      const ResponsItem = await axios.get(URLitem);
+      const ResponsCart = await axios.get(URLcart);
 
-    },[isActiveCategory])
-
-
-    const onAddtoCartitems = (obj) => {
-      axios.get('https://666485f2932baf9032ab58c8.mockapi.io/item', obj);
-      setItemsDrawer(prev=>[...prev, obj]);
+      setItemsDrawer(ResponsItem.data)
+      setCard(ResponsCart.data)
     }
+  
+  AxiosData()
 
+  },[isActiveCategory])
+ 
+  /*Добавление данных в корзину */
+  const onAddtoCartitems = (obj) => {
+    axios.post(URLitem, obj);
+    setItemsDrawer(prev=>[...prev, obj]);
+  }
+
+  /*Удаление данных из корзины ЕЩЕ НЕ ПОФИКСИЛ*/
+  const onRemoveitems = (id) => {
+    axios.delete(`https://666485f2932baf9032ab58c8.mockapi.io/item/${id}`);
+    setItemsDrawer((prev)=> prev.filter(item => item.id !== id));
+    console.log(id)
+  }
 
   return (
+    <AppContext.Provider 
+    value={{
+     onRemoveitems,
+     setActiveCategory, 
+     isActiveCategory, 
+     onAddtoCartitems, 
+     isCard, 
+     isItemsDrawer
+     }}>
+
     <div className="Wraper">
       <div className="Container">
-        <Header isCard={isCard} isItemsDrawer={isItemsDrawer} />
+        <Header/>
         <div className="Main">
           <div className="Main_con">
-           <Filter isActiveCategory={isActiveCategory} onClickCategory={(i)=> setActiveCategory(i)}/>
-           <div className="Box_cards">
-              <div className="Box_cards_con">
-                  {isCard.map((item, i) =>(
-                      <Cards  
-                      key={i}
-                      isItemsDrawer={(obj)=>onAddtoCartitems(obj)} 
-                      onAddtoCartitems={onAddtoCartitems} 
-                      Title={item.Title} 
-                      Img={item.Img} 
-                      Price={item.Price}/>
-                  ))}
-              </div>
+          <Routes>
+            <Route path="/" element={<Home/>}/>
+            <Route path="/Favorite" element={<Favorite/>}/>
+          </Routes>
           </div>
-          </div>
-          
         </div>
       </div>
     </div>
+    </AppContext.Provider>
   );
 }
 

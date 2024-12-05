@@ -1,10 +1,13 @@
 import React from "react";
+
+
 import style from "./Filter.module.scss"
+import AppContext from "../../Context/AppContext";
 
 
-function Filter ({isActiveCategory, onClickCategory}) {
+function Filter () {
 
-   
+    const {setActiveCategory, isActiveCategory} = React.useContext (AppContext)
 
     const filter = ["All","Nike","Puma", "Adidas"]
 
@@ -14,7 +17,7 @@ function Filter ({isActiveCategory, onClickCategory}) {
                 {filter.map((value,i) =>(
                     <li
                     key={i}
-                    onClick={()=>onClickCategory(i)}
+                    onClick={()=>setActiveCategory(i)}
                     className={isActiveCategory === i ? "active": ''}
                     >{value}</li>
                 ))}

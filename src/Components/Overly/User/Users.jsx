@@ -1,11 +1,21 @@
-import style from "./Users.module.scss"
+import React from "react";
 
-function Users ({ClickCloseUser}) {
+
+import style from "./Users.module.scss"
+import HeaderContext from "../../../Context/HeaderContext";
+
+
+function Users () {
+
+
+    const {ClickCloseUserName} = React.useContext(HeaderContext)
+
+    
     return(
         <div className={style.Overlay}>
             <div className={style.Panel}>
                 <div className={style.Panel_Container}>
-                    <img onClick={ClickCloseUser} width={25} height={25} src="./img/Close.png"></img>
+                    <img onClick={ClickCloseUserName} width={25} height={25} src="./img/Close.png"></img>
                     <div className={style.Panel_Header}>
                         <h1>Sign in Microchelik </h1>
                     </div>

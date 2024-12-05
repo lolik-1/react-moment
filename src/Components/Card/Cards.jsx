@@ -1,20 +1,26 @@
 import React from "react";
 
 import style from "./Cards.module.scss"
+import AppContext from "../../Context/AppContext";
 
-function Cards ({Title,Img,Price,isItemsDrawer}) {
+function Cards ({Title,Img,Price}) {
 
-    const [isFollow, setFollow] =React.useState(false)
 
-    const isFollowCheck = () =>{
-        setFollow(!isFollow)
-    }
+    const {onAddtoCartitems} = React.useContext(AppContext)
+
+    
 
     const [isCheck, setCheck] =React.useState(false)
-
     const isChecked = () =>{
-        isItemsDrawer({Title,Img,Price,})
+        onAddtoCartitems({Title,Img,Price})
         setCheck(!isCheck)
+    }
+
+
+
+    const [isFollow, setFollow] =React.useState(false)
+    const isFollowCheck = () =>{
+        setFollow(!isFollow)
     }
     
 
