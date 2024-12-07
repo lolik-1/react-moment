@@ -8,6 +8,12 @@ function Card ({Img, Title, Price, id, }) {
   
 
 const {onRemoveitems} = React.useContext(AppContext)
+const obj = {id,Img, Title, Price}
+
+const RemoveDrawer = () => {
+    onRemoveitems(obj)
+}
+
 
     return(
         <div className={style.Card}>
@@ -17,7 +23,7 @@ const {onRemoveitems} = React.useContext(AppContext)
                     <p>{Title}</p>
                     <p className={style.Price}>{Price} руб.</p>
                 </div>
-                <button><img onClick={() => onRemoveitems(id)} width={20} height={20} src="./img/Close.png" alt="Close"></img></button>
+                <button><img onClick={RemoveDrawer} width={20} height={20} src="./img/Close.png" alt="Close"></img></button>
             </div>
         </div>
     )

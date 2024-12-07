@@ -9,14 +9,14 @@ import CardFavorite   from "../../Components/Card/CardFav/CardFavorite";
 
 function Favorite () {
 
-    const {isCard} = React.useContext(AppContext)
+    const {isFavorite} = React.useContext(AppContext)
 
     return(
-        <AppContext.Provider value={{isCard}}>
+        <AppContext.Provider value={{isFavorite}}>
             <h1 className={style.Title}>Закладки</h1>
             <div className={style.Container}>
                 <div className={style.Container_con}>
-                    {isCard.map((item , id) =>(
+                    {isFavorite.map((item , id) =>(
                             <CardFavorite  
                                 id={id}
                                 {...item}

@@ -19,6 +19,7 @@ function App() {
   const [isActiveCategory, setActiveCategory] = React.useState(0)
   const [isFavorite, setFavorite] = React.useState([])
 
+
   /*Ссылки на бэк*/
   let URLitem = 'https://666485f2932baf9032ab58c8.mockapi.io/item';
   let URLcart = `https://666485f2932baf9032ab58c8.mockapi.io/cart?${isActiveCategory > 0 ? `iden=${isActiveCategory}`:''}`
@@ -42,37 +43,34 @@ function App() {
 
   },[isActiveCategory])
 
+
+  
   /*Добавление данных в закладки */ 
   const onAddFavorite = (obj) =>{
     axios.post(URLFavorite,obj)
     setFavorite(prev=>[...prev, obj]);
   }
 
-
-  /*Удаление данных из закладок*/
+  /*Удаление данных из закладок ЕЩЕ НЕ ПОФИКСИЛ*/
   const Remove = (obj) => {
-    if (isFavorite.find(item => item.id == obj.id)){
-      axios.delete(`https://9dc948808c314fdf.mokky.dev/favorite/${obj.id}`)
-      setFavorite((prev) => prev.filter(favorite => favorite.id !== obj.id))
-    }
-    else {setFavorite(prev=>[...prev, obj]);}
-      
-    }
+    axios.delete(`https://9dc948808c314fdf.mokky.dev/favorite/${obj.id}`)
+    setFavorite((prev) => prev.filter(favorite => favorite.id !== obj.id))
+  }
+    
 
 
-  /*Добавление данных в корзину  ЕЩЕ НЕ ПОФИКСИЛ*/
+  /*Добавление данных в корзину*/
   const onAddtoCartitems = (obj) => {
     axios.post(URLitem, obj);
     setItemsDrawer(prev=>[...prev, obj]);
   }
 
   /*Удаление данных из корзины ЕЩЕ НЕ ПОФИКСИЛ*/
-  const onRemoveitems = (id) => {
-    axios.delete(`https://666485f2932baf9032ab58c8.mockapi.io/item/${id}`);
-    setItemsDrawer((prev) => prev.filter(item => item.id !== id));
+  const onRemoveitems = (obj) => {
+    axios.delete(`https://666485f2932baf9032ab58c8.mockapi.io/item/${obj.id}`);
+    setItemsDrawer((prev) => prev.filter(item => item.id !== obj.id));
   }
 
-  
   return (
     <AppContext.Provider 
     value={{
@@ -83,7 +81,8 @@ function App() {
      isCard, 
      isItemsDrawer,
      onAddFavorite,
-     Remove
+     Remove,
+     isFavorite
      }}>
 
     <div className="Wraper">

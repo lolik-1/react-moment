@@ -3,24 +3,23 @@ import React from "react";
 import style from "./Cards.module.scss"
 import AppContext from "../../../Context/AppContext";
 
-function Cards ({Title,Img,Price}) {
+function Cards ({Title,Img,Price,id}) {
 
 
     const {onAddtoCartitems,onAddFavorite} = React.useContext(AppContext)
+    const obj = {id,Title,Img,Price,}
 
-    
 
     const [isCheck, setCheck] =React.useState(false)
     const isChecked = () =>{
-        onAddtoCartitems({Title,Img,Price})
+        onAddtoCartitems(obj)
         setCheck(!isCheck)
     }
 
 
-
     const [isFollow, setFollow] =React.useState(false)
     const isFollowCheck = () =>{
-        onAddFavorite({Title,Img,Price})
+        onAddFavorite(obj)
         setFollow(!isFollow)
     }
     

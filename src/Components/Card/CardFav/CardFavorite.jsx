@@ -6,12 +6,14 @@ import AppContext from "../../../Context/AppContext";
 function Cards ({Title,Img,Price,id}) {
 
     const {Remove} = React.useContext(AppContext)
-
-
     const [isFollow, setFollow] =React.useState(false)
+    const obj = {id, Title, Img, Price}
+
+
+
 
     const isFollowCheck = () =>{
-        Remove((id,Title,Img,Price))
+        Remove(obj)
         setFollow(!isFollow)
     
     }
