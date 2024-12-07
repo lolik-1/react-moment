@@ -51,15 +51,15 @@ function App() {
     setFavorite(prev=>[...prev, obj]);
   }
 
+
   /*Удаление данных из закладок ЕЩЕ НЕ ПОФИКСИЛ*/
   const Remove = (obj) => {
     axios.delete(`https://9dc948808c314fdf.mokky.dev/favorite/${obj.id}`)
     setFavorite((prev) => prev.filter(favorite => favorite.id !== obj.id))
   }
-    
+  
 
-
-  /*Добавление данных в корзину*/
+  /*Добавление данных в корзину */
   const onAddtoCartitems = (obj) => {
     axios.post(URLitem, obj);
     setItemsDrawer(prev=>[...prev, obj]);
