@@ -1,29 +1,21 @@
 import React from "react";
 
-import style from "./Cards.module.scss"
-import AppContext from "../../Context/AppContext";
+import style from "./CardFavorite.module.scss"
+import AppContext from "../../../Context/AppContext";
 
-function Cards ({Title,Img,Price}) {
+function Cards ({Title,Img,Price,id}) {
 
-
-    const {onAddtoCartitems} = React.useContext(AppContext)
-
-    
-
-    const [isCheck, setCheck] =React.useState(false)
-    const isChecked = () =>{
-        onAddtoCartitems({Title,Img,Price})
-        setCheck(!isCheck)
-    }
-
+    const {Remove} = React.useContext(AppContext)
 
 
     const [isFollow, setFollow] =React.useState(false)
+
     const isFollowCheck = () =>{
+        Remove((id,Title,Img,Price))
         setFollow(!isFollow)
+    
     }
     
-
 
     return(
         <div className={style.Card}>
@@ -36,7 +28,6 @@ function Cards ({Title,Img,Price}) {
                         <p className={style.Price}>{Price} руб.</p>
                     </div>
                     <div className={style.Card_button}>
-                        <button><img onClick={isChecked}  width={30} height={30} src={isCheck ? "./img/CheckOre.png" : "./img/check.png"}></img></button>
                         <button><img onClick={isFollowCheck} width={30} height={30} src={isFollow ? "./img/2.png":"./img/1.png"}></img></button>
                     </div>
                 </div>

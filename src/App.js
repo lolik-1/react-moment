@@ -5,8 +5,8 @@ import {Route, Routes } from "react-router-dom";
 
 
 import Header from "./Components/Header/Header";
-import Home from "./Pages/Home";
-import Favorite from "./Pages/Favorite";
+import Home from "./Pages/Home/Home";
+import Favorite from "./Pages/Favorite/Favorite";
 import AppContext from "./Context/AppContext";
 
 
@@ -16,11 +16,13 @@ function App() {
   /*Стейты*/
   const [isCard, setCard] = React.useState([])
   const [isItemsDrawer, setItemsDrawer] = React.useState([])
-  const [isActiveCategory, setActiveCategory] =React.useState(0)
+  const [isActiveCategory, setActiveCategory] = React.useState(0)
+  const [isFavorite, setFavorite] = React.useState([])
 
   /*Ссылки на бэк*/
   let URLitem = 'https://666485f2932baf9032ab58c8.mockapi.io/item';
   let URLcart = `https://666485f2932baf9032ab58c8.mockapi.io/cart?${isActiveCategory > 0 ? `iden=${isActiveCategory}`:''}`
+  let URLFavorite = 'https://9dc948808c314fdf.mokky.dev/favorite';
 
   /*Запросы на сервер*/
   React.useEffect(()=>{
@@ -28,16 +30,37 @@ function App() {
 
       const ResponsItem = await axios.get(URLitem);
       const ResponsCart = await axios.get(URLcart);
+      const ResponsFavorite = await axios.get(URLFavorite)
 
       setItemsDrawer(ResponsItem.data)
+      setFavorite(ResponsFavorite.data)
       setCard(ResponsCart.data)
+      
     }
   
   AxiosData()
 
   },[isActiveCategory])
- 
-  /*Добавление данных в корзину */
+
+  /*Добавление данных в закладки */ 
+  const onAddFavorite = (obj) =>{
+    axios.post(URLFavorite,obj)
+    setFavorite(prev=>[...prev, obj]);
+  }
+
+
+  /*Удаление данных из закладок*/
+  const Remove = (obj) => {
+    if (isFavorite.find(item => item.id == obj.id)){
+      axios.delete(`https://9dc948808c314fdf.mokky.dev/favorite/${obj.id}`)
+      setFavorite((prev) => prev.filter(favorite => favorite.id !== obj.id))
+    }
+    else {setFavorite(prev=>[...prev, obj]);}
+      
+    }
+
+
+  /*Добавление данных в корзину  ЕЩЕ НЕ ПОФИКСИЛ*/
   const onAddtoCartitems = (obj) => {
     axios.post(URLitem, obj);
     setItemsDrawer(prev=>[...prev, obj]);
@@ -46,10 +69,10 @@ function App() {
   /*Удаление данных из корзины ЕЩЕ НЕ ПОФИКСИЛ*/
   const onRemoveitems = (id) => {
     axios.delete(`https://666485f2932baf9032ab58c8.mockapi.io/item/${id}`);
-    setItemsDrawer((prev)=> prev.filter(item => item.id !== id));
-    console.log(id)
+    setItemsDrawer((prev) => prev.filter(item => item.id !== id));
   }
 
+  
   return (
     <AppContext.Provider 
     value={{
@@ -58,7 +81,9 @@ function App() {
      isActiveCategory, 
      onAddtoCartitems, 
      isCard, 
-     isItemsDrawer
+     isItemsDrawer,
+     onAddFavorite,
+     Remove
      }}>
 
     <div className="Wraper">
